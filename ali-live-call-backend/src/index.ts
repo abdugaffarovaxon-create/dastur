@@ -63,7 +63,7 @@ io.on('connection', (socket) => {
 });
 
 // Fallback: serve index.html for any unmatched route (SPA behavior)
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
