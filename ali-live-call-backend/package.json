@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd ../ali-live-call-frontend && npm install && npm run build && cd ../ali-live-call-backend && tsc",
+    "build": "cd ../ali-live-call-frontend && npm install && npm run build && cd ../ali-live-call-backend && tsc && node -e \"require('fs').cpSync('../ali-live-call-frontend/out', './public', {recursive: true})\"",
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts"
   },

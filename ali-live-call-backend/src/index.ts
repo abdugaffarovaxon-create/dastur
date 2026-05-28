@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 import { translate } from '@vitalets/google-translate-api';
 import path from 'path';
 
+console.log("Starting server process...");
+
 dotenv.config();
 
 const app = express();
@@ -18,8 +20,11 @@ app.use(cors({
 
 app.use(express.json());
 
-// Serve frontend static files
-const frontendPath = path.join(__dirname, '..', '..', 'ali-live-call-frontend', 'out');
+// Serve frontend static files from local 'public' folder
+// Because Render deletes folders outside the Root Directory!
+const frontendPath = path.join(__dirname, '..', 'public');
+console.log("Frontend path set to:", frontendPath);
+
 app.use(express.static(frontendPath));
 
 const io = new Server(server, {
@@ -62,8 +67,8 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT as string, 10) || 5000;
 
-server.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is successfully running and bound to port ${PORT} on 0.0.0.0`);
 });
