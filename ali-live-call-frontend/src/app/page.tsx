@@ -23,7 +23,7 @@ export default function Home() {
   }, [transcript]);
 
   useEffect(() => {
-    const newSocket = io('https://dastur-et81.onrender.com');
+    const newSocket = io();
     setSocket(newSocket);
 
     newSocket.on('connect', () => setIsConnected(true));

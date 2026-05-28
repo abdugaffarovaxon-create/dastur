@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { translate } from '@vitalets/google-translate-api';
+import path from 'path';
 
 dotenv.config();
 
@@ -16,6 +17,10 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// Serve frontend static files
+const frontendPath = path.join(__dirname, '..', '..', 'ali-live-call-frontend', 'out');
+app.use(express.static(frontendPath));
 
 const io = new Server(server, {
     cors: {
@@ -52,8 +57,9 @@ io.on('connection', (socket) => {
     });
 });
 
-app.get('/', (req, res) => {
-    res.send('ALI LIVE CALL TRANSLATOR BACKEND IS RUNNING!');
+// Fallback: serve index.html for any unmatched route (SPA behavior)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
