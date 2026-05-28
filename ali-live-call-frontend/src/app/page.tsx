@@ -23,8 +23,7 @@ export default function Home() {
   }, [transcript]);
 
   useEffect(() => {
-    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://192.168.100.78:5000';
-    const newSocket = io(socketUrl);
+    const newSocket = io('https://dastur-et81.onrender.com');
     setSocket(newSocket);
 
     newSocket.on('connect', () => setIsConnected(true));
