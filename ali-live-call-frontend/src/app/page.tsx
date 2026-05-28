@@ -23,7 +23,8 @@ export default function Home() {
   }, [transcript]);
 
   useEffect(() => {
-    const newSocket = io('http://192.168.100.78:5000');
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://192.168.100.78:5000';
+    const newSocket = io(socketUrl);
     setSocket(newSocket);
 
     newSocket.on('connect', () => setIsConnected(true));
